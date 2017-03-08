@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+
+ cassandra-seed:
+    image: seb/cassandra
+    ports:
+      - "9042"
+    environment:
+       CASSANDRA_DC: DC1
+       CASSANDRA_CLUSTER_NAME: CWO
+       MAX_HEAP_SIZE: "500M"
+       HEAP_NEWSIZE: "100M"
+    networks:
+      - cassandra_net
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 40s
+
+networks:
+   cassandra_net:
+     external: true

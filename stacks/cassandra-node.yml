@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+
+ cassandra-node:
+    image: seb/cassandra
+    environment:
+      CASSANDRA_SEEDS: "tasks.cassandra-seed"
+      CASSANDRA_DC: DFYONE
+      CASSANDRA_CLUSTER_NAME: CWO
+      MAX_HEAP_SIZE: "500M"
+      HEAP_NEWSIZE: "100M"
+    networks:
+     - cassandra_net
+
+    deploy:
+      replicas: 3
+      update_config:
+        parallelism: 1
+        delay: 40s
+        monitor: 10s
+      
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 40s
+
+networks:
+   cassandra_net:
+     external: true
+     
