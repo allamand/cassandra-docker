@@ -3,8 +3,8 @@ version: "3"
 services:
 
   prometheus:
-    build: prom
-    image: seb/prometheus
+    build: ../prometheus
+    image: ${REGISTRY_SLASH-127.0.0.1:5000/}prometheus${COLON_TAG-:latest}
     command:
       - '-config.file=/etc/prometheus/prometheus.yml'
       - '-storage.local.path=/prometheus'
@@ -72,3 +72,6 @@ networks:
   monitoring:
     driver: overlay
 
+   cassandra_net:
+     external: true
+     

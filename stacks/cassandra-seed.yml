@@ -3,7 +3,8 @@ version: "3"
 services:
 
  cassandra-seed:
-    image: seb/cassandra
+    build: ../cassandra-prometheus
+    image: ${REGISTRY_SLASH-127.0.0.1:5000/}cassandra${COLON_TAG-:latest}    
     ports:
       - "9042"
     environment:

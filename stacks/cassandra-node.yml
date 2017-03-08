@@ -2,8 +2,9 @@ version: '3'
 
 services:
 
- cassandra-node:
-    image: seb/cassandra
+  cassandra-node:
+    build: ../cassandra-prometheus
+    image: ${REGISTRY_SLASH-127.0.0.1:5000/}cassandra${COLON_TAG-:latest}
     environment:
       CASSANDRA_SEEDS: "tasks.cassandra-seed"
       CASSANDRA_DC: DFYONE
