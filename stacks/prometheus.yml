@@ -13,6 +13,9 @@ services:
     networks:
       - monitoring
       - cassandra_net
+    depends_on:
+      - node-exporter
+      - cadvisor      
     deploy:
       replicas: 1
       placement:
@@ -54,8 +57,8 @@ services:
     image: grafana/grafana
     ports:
       - "3000:3000"
-    volumes:
-      - "/var/lib/grafana:/var/lib/grafana"
+#    volumes:
+#      - "/var/lib/grafana:/var/lib/grafana"
     environment:
       GF_SECURITY_ADMIN_PASSWORD: "${PASSWORD}"
       GF_USERS_ALLOW_SIGN_UP: "false"
@@ -72,6 +75,6 @@ networks:
   monitoring:
     driver: overlay
 
-   cassandra_net:
-     external: true
+  cassandra_net:
+    external: true
      
